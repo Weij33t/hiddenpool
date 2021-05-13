@@ -1,8 +1,17 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import Button from '../../UI/Button'
+
+import cls from './Offer.module.sass'
 
 function Offer() {
-  return <div></div>
+  return (
+    <div className={cls.Offer} id="offer">
+      <h2>
+        Сделай заказ чего-нибудь уже <span>сейчас!</span>
+      </h2>
+      <Button text="Заказать" />
+    </div>
+  )
 }
 
 export default Offer

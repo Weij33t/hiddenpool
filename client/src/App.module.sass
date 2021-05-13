@@ -1,0 +1,28 @@
+@import './styles/variables.module.sass'
+
+.App
+  margin: 0 auto
+
+.AppWrapper
+  margin: 0 auto
+  padding: 0 -20px 
+  max-width: $Elg
+
+
+@media screen and ( min-width: $Elg )
+  .AppWrapper
+    max-width: $Elg
+
+@media screen and ( min-width: $Lg ) and (max-width: $Elg)
+  .AppWrapper
+    max-width: $Lg
+
+@media screen and ( min-width: $Md ) and (max-width: $Lg)
+  .AppWrapper
+    max-width: $Md
+
+@media screen and ( min-width: $Xs ) and (max-width: $Md)
+  .AppWrapper
+    max-width: 100%
+
+

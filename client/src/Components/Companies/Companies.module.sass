@@ -1,0 +1,23 @@
+
+@import '../../styles/variables.module.sass'
+  
+.Companies 
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  align-items: center
+  padding: 100px 0
+
+.Company 
+  width: 90%
+  padding: 15px 0
+  display: flex
+  align-items: center
+  flex-direction: column
+  margin: 0 auto
+  border: 2px solid $dark 
+  border-radius: 5px
+  &:hover 
+    border-color: $orange
+  .CompanyName
+    font-weight: bold
+    font-size: 14px

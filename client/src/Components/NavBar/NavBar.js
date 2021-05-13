@@ -1,25 +1,25 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-
+import { HashLink } from 'react-router-hash-link'
 import cls from './NavBar.module.sass'
 
 function NavBar() {
   console.log(cls)
   return (
-    <div>
-      <ul className={cls.NavBar}>
-        <NavLink to="/#news">
+    <div className={cls.NavBar}>
+      <ul>
+        <HashLink to="/#news" smooth>
           <li>Новости</li>
-        </NavLink>
-        <NavLink to="/#companies">
+        </HashLink>
+        <HashLink to="/#companies" smooth>
           <li>Компании</li>
-        </NavLink>
-        <NavLink to="/#offer">
+        </HashLink>
+        <HashLink to="/#offer" smooth>
           <li>Оформить заказ</li>
-        </NavLink>
-        <NavLink to="/#about">
+        </HashLink>
+        <HashLink to="/#about" smooth>
           <li>О нас</li>
-        </NavLink>
+        </HashLink>
       </ul>
     </div>
   )

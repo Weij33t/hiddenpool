@@ -1,0 +1,44 @@
+@import '../../styles/variables.module.sass'
+
+
+.News 
+  display: grid
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr))
+  padding: 100px 0
+
+.News .NewsItem:hover 
+  .NewsItemContent
+    display: block
+
+.NewsItem 
+  position: relative
+.NewsItemContent
+  height: 100%
+  width: 100%
+  display: none
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background: rgba(0, 0, 0, .5)
+  transition: 0.2s background
+
+
+@media screen and ( max-width: 960px )
+  .News 
+    display: flex
+    justify-content: flex-start
+    flex-wrap: wrap
+  .NewsItem
+    width: 33.3333vw
+    height: 33.333vw
+
+@media screen and ( max-width: 540px )
+  .News 
+    display: flex
+    justify-content: center
+    flex-wrap: wrap
+  .NewsItem
+    width: 50vw
+  

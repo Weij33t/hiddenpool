@@ -7,17 +7,23 @@ import NavBar from './Components/NavBar/NavBar.js'
 import News from './Components/News/News.js'
 import Offer from './Components/Offer/Offer.js'
 
+import cls from './App.module.sass'
+
 function App() {
   console.log(companies)
   return (
-    <div className="App">
+    <div className={cls.App}>
+      <NavBar />
       <Switch>
-        <NavBar />
         <Route path={'/'}>
-          <News />
-          <Companies />
+          <div className={cls.AppWrapper}>
+            <News />
+            <Companies />
+          </div>
           <Offer />
-          <About />
+          <div className={cls.AppWrapper}>
+            <About />
+          </div>
         </Route>
         <Route path={'/companies/:id'} />
       </Switch>
