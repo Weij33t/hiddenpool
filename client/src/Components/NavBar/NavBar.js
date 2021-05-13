@@ -3,8 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 import cls from './NavBar.module.sass'
 
-function NavBar() {
-  console.log(cls)
+function NavBar({ isLogin, logout }) {
   return (
     <div className={cls.NavBar}>
       <ul>
@@ -20,6 +19,15 @@ function NavBar() {
         <HashLink to="/#about" smooth>
           <li>О нас</li>
         </HashLink>
+        {isLogin ? (
+          <NavLink to="/profile">
+            <li>Профиль</li>
+          </NavLink>
+        ) : (
+          <NavLink to="/login">
+            <li>Войти</li>
+          </NavLink>
+        )}
       </ul>
     </div>
   )
