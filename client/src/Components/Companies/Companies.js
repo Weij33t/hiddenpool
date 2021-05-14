@@ -10,49 +10,89 @@ import Button from '../../UI/Button.js'
 import { useQuery } from '@apollo/client'
 import { GET_COMPANIES } from '../../query/company'
 import axios from 'axios'
+import { GET_ONE_USER } from '../../query/user'
 
 function Companies(props) {
   const [companies, setCompanies] = useState([])
-  const [isAdded, setIsAdded] = useState(false)
-  const [likedCompanies, setLikedCompanies] = useState(
-    props.likedCompanies ? props.likedCompanies : []
-  )
+  const [isLiked, setIsLiked] = useState(false)
+  const [user, setUser] = useState({})
   const { data, loading, refetch } = useQuery(GET_COMPANIES, {
     variables: {
       role: 'Компания',
     },
+    notifyOnNetworkStatusChange: true,
+  })
+  const { data: userData, loading: userLoading } = useQuery(GET_ONE_USER, {
+    variables: {
+      id: props._id,
+    },
+    notifyOnNetworkStatusChange: true,
   })
   useEffect(() => {
     if (!loading) {
+      console.log('newComp')
       setCompanies(data.getAllCompanies)
     }
-  }, [data])
+    if (!userLoading) {
+      console.log('newData')
+      setUser(userData.getUser)
+    }
+  }, [data, userData])
 
   const likeCompany = async (id) => {
     const company = { ...companies[id] }
-    company.likes = company.likes + (isAdded ? 0 : 1)
-    if (!isAlreadyLiked(id)) {
-      likedCompanies.push(company.id)
-    } else {
-      const id = likedCompanies.indexOf(company.id)
-      likedCompanies.splice(id, 1)
-    }
-    console.log(company.likes, likedCompanies)
-    setLikedCompanies(likedCompanies)
-    await axios.post('http://localhost:5000/like', {
-      likes: company.likes,
-      userId: props._id,
-      companyId: company.id,
-      isAdded,
-    })
-    refetch()
-  }
-  const isAlreadyLiked = (id) => {
-    if (likedCompanies.indexOf(companies[id].id) === -1) {
+    company.likes = company.likes + 1
+
+    if (user.likedCompanies.includes(company.id)) {
       return false
     }
-    return true
+    const response = await axios.post('http://localhost:5000/like', {
+      likes: company.likes,
+      companyId: company.id,
+      userId: user.id,
+      likedCompanies: [...user.likedCompanies, company.id],
+    })
+    setCompanies([
+      ...companies.slice(0, id),
+      company,
+      ...companies.slice(id + 1),
+    ])
+    setUser({ ...user, likedCompanies: [...user.likedCompanies, company.id] })
+    setIsLiked(true)
   }
+
+  const dislikeCompany = async (id) => {
+    const company = { ...companies[id] }
+    console.log('dis')
+    company.likes = company.likes - 1
+
+    const companyIndex = user.likedCompanies.indexOf(company.id)
+
+    const response = await axios.post('http://localhost:5000/like', {
+      likes: company.likes,
+      companyId: company.id,
+      userId: user.id,
+      likedCompanies: [
+        ...user.likedCompanies.slice(0, companyIndex),
+        ...user.likedCompanies.slice(companyIndex + 1),
+      ],
+    })
+    setUser({
+      ...user,
+      likedCompanies: [
+        ...user.likedCompanies.slice(0, companyIndex),
+        ...user.likedCompanies.slice(companyIndex + 1),
+      ],
+    })
+    setIsLiked(false)
+    setCompanies([
+      ...companies.slice(0, id),
+      company,
+      ...companies.slice(id + 1),
+    ])
+  }
+  // console.log(user, companies).
+  console.log(user, companies)
   return (
     <div className={AppWrapper}>
       <div
@@ -61,7 +101,7 @@ function Companies(props) {
         } ${loading ? cls.loading : ''}`}
         id="companies"
       >
-        {!loading || likedCompanies ? (
+        {!loading || !userLoading || user.likedCompanies ? (
           companies.length > 0 ? (
             companies.map((company, index) => {
               return (
@@ -69,18 +109,32 @@ function Companies(props) {
                   <div className={cls.TextContent}>
                     <div className={cls.CompanyName}>
                       {company.name}
-                      {company.likes + (isAdded ? 1 : 0)}
+                      {company.likes}
                       {props.isLogin && props.isUser && (
                         <span
                           className={`${
-                            isAdded
-                              ? icons['icon-heart']
-                              : icons['icon-heart-o']
+                            icons[
+                              'icon-heart' +
+                                `${
+                                  user.likedCompanies?.includes(company.id)
+                                    ? ''
+                                    : '-o'
+                                }`
+                            ]
                           }`}
                           style={{ cursor: 'pointer' }}
                           onClick={() => {
-                            setIsAdded(!isAdded)
-                            likeCompany(index)
+                            if (
+                              !!user &&
+                              user.likedCompanies.includes(company.id)
+                            ) {
+                              dislikeCompany(index)
+                            } else if (
+                              !!user &&
+                              !user.likedCompanies.includes(company.id)
+                            ) {
+                              likeCompany(index)
+                            }
                           }}
                         ></span>
                       )}
@@ -92,7 +146,7 @@ function Companies(props) {
                   <div className={cls.CompanyImage}>
                     <img srcSet={Image} />
                   </div>
-                  <Button text="Заказать" />
+                  <button onClick={() => refetch()}>Заказать</button>
                 </div>
               )
             })

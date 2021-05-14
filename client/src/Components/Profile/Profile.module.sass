@@ -1,0 +1,28 @@
+@import '../../styles/variables.module.sass'
+  
+.Profile 
+  width: 100%
+  .ContentWrapper
+    width: 100%
+    display: flex
+    justify-content: space-between
+    align-items: flex-end
+  .TextContent
+    height: 100%
+    display: flex
+    flex-direction: column
+    width: 60%
+  textarea, .Desc
+    outline: none
+    font-size: 16px
+    width: 90%
+    height: 400px
+
+    white-space: pre-line
+    border: 1px solid $dark
+    p, h2
+      margin: 0
+  textarea.active 
+    border: 1px solid $orange
+  button
+    align-self: flex-start

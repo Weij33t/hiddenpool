@@ -20,18 +20,13 @@ class likeController {
           .status(400)
           .json({ message: 'Ошибка при регистрации', errors })
       }
-      const { likes, companyId, userId, isAdded } = req.body
+      const { likes, companyId, userId, likedCompanies } = req.body
       await User.findOne({ _id: userId }).exec(async (err, res) => {
         if (err) {
           throw new Error(err)
         }
         if (res) {
-          const index = res.likedCompanies.indexOf(companyId)
-          if (index === -1) {
-            res.likedCompanies.push(companyId)
-          } else {
-            res.likedCompanies.splice(index, 1)
-          }
+          res.likedCompanies = likedCompanies
           await res.save()
         }
       })
@@ -44,7 +39,10 @@ class likeController {
           await res.save()
         }
       })
-      return res
+      return res.json({
+        userId,
+        companyId,
+      })
     } catch (e) {
       console.log(e)
       res.status(400).json({ message: 'error' })
