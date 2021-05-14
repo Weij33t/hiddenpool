@@ -20,12 +20,15 @@ class authController {
           .status(400)
           .json({ message: 'Ошибка при регистрации', errors })
       }
-      const { name, password, INN } = req.body
+      const { name, password, INN, role } = req.body
       const candidate = await User.findOne({ name })
       if (candidate) {
         return res
           .status(400)
-          .json({ message: 'Компания с таким названием уже зарегистрировать' })
+          .json({ message: 'Компания с таким названием уже зарегистрирована' })
+      }
+      if (!INN && role === 'Компания') {
+        return res.status(400).json({ message: 'Укажите INN' })
       }
       const hashPassword = bcrypt.hashSync(password, 7)
       const user = new User({
@@ -33,26 +36,33 @@ class authController {
         password: hashPassword,
         desc: '',
         INN,
+        likes: 0,
+        role,
       })
       await user.save()
       return res.json({ message: 'Пользователь успешно зарегистрирован' })
     } catch (e) {
+      console.log(e)
       res.status(400).json({ message: 'Registration error' })
     }
   }
 
   async login(req, res) {
     try {
-      const { name, password, INN } = req.body
+      const { name, password, INN, role } = req.body
       const user = await User.findOne({ name })
       if (!user) {
-        return res.status(400).json({ message: `Компания ${name} не найдена` })
+        return res.status(400).json({
+          message: `${
+            role === 'Компания' ? 'Компания' : 'Пользователь'
+          } ${name} не найден${role === 'Компания' ? 'а' : ''}`,
+        })
       }
       const validPassword = bcrypt.compareSync(password, user.password)
       if (!validPassword) {
         return res.status(400).json({ message: `Введен неверный пароль` })
       }
-      if (INN !== user.INN) {
+      if (INN !== user.INN && user.role === 'Компания') {
         return res.status(400).json({ message: `Введен неверный INN` })
       }
       const token = generateAccessToken(user._id)
@@ -60,6 +70,9 @@ class authController {
         token,
         name: user.name,
         desc: user.desc,
+        role: user.role,
+        likes: user.likes,
+        likedCompanies: user.likedCompanies,
         _id: user._id,
       })
     } catch (e) {

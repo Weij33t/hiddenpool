@@ -15,7 +15,6 @@ function Profile({ _id }) {
   })
   const [user, setUser] = useState({})
   const [isFormatted, setIsFormatted] = useState(true)
-  console.log(loading)
 
   useEffect(() => {
     if (!loading) {
@@ -36,7 +35,10 @@ function Profile({ _id }) {
   return (
     <div className={AppWrapper}>
       <div className={cls.Profile}>
-        <h1>Профиль компании {user.name}</h1>
+        <h1>
+          Профиль {user.role === 'Компания' ? 'компании' : 'пользователя'}{' '}
+          {user.name}
+        </h1>
         <hr />
         {isFormatted && <div onClick={() => setIsFormatted(false)}></div>}
         {!isFormatted && (
@@ -46,7 +48,7 @@ function Profile({ _id }) {
             onBlur={() => setIsFormatted(true)}
           ></textarea>
         )}
-        <div>Количество лайков: {user.likes ?? 0}</div>
+        <div>Количество лайков: {user.likes}</div>
         <Button text="Изменить описание" click={changeDesc} />
       </div>
     </div>

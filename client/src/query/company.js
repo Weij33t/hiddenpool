@@ -1,25 +1,26 @@
 import { gql } from '@apollo/client'
 
-export const GET_ONE_USER = gql`
+export const GET_COMPANY = gql`
   query getUser($id: ID) {
     getUser(id: $id) {
       name
       desc
       INN
-      likedCompanies
       likes
       role
     }
   }
 `
 
-export const GET_ALL_USERS = gql`
-  query {
-    getAllUsers {
+export const GET_COMPANIES = gql`
+  query getAllCompanies($role: String) {
+    getAllCompanies(role: $role) {
+      id
       name
       desc
       INN
       likes
+      role
     }
   }
 `

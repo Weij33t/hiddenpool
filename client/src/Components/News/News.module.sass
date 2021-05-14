@@ -24,6 +24,8 @@
   background: rgba(0, 0, 0, .5)
   transition: 0.2s background
 
+.NewsItemImage
+  min-height: 300px
 
 @media screen and ( max-width: 960px )
   .News 
@@ -33,12 +35,16 @@
   .NewsItem
     width: 33.3333vw
     height: 33.333vw
+  .NewsItemImage
+    min-height: 400px
 
 @media screen and ( max-width: 540px )
+  
   .News 
     display: flex
     justify-content: center
     flex-wrap: wrap
   .NewsItem
     width: 50vw
-  
+  .NewsItemImage
+    min-height: 200px

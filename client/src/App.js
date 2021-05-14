@@ -11,26 +11,28 @@ import Offer from './Components/Offer/Offer.js'
 
 import cls from './App.module.sass'
 import Auth from './Components/Login/Auth.js'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Profile from './Components/Profile/Profile.js'
+import { GET_COMPANIES } from './query/company.js'
 
 function App() {
-  const [user, setUser] = useState({ name: '', desc: '', isLogin: false })
+  const [user, setUser] = useState({ _id: null, isLogin: false })
 
-  const setUserData = (name, desc, _id, isLogin) => {
-    setUser({ name, desc, _id, isLogin })
+  const setUserData = (user, isLogin, role) => {
+    setUser({ ...user, isLogin, role })
   }
 
   const logout = () => {
-    setUser({ name: '', desc: '', isLogin: false })
+    setUser({ _id: null, isLogin: false })
   }
+  console.log(user)
   return (
     <div className={cls.App}>
       <NavBar isLogin={user.isLogin} logout={logout} />
       <Switch>
         <Route path={'/'} exact>
           <News />
-          <Companies />
+          <Companies isUser={user.role !== 'Компания'} {...user} />
           <Offer />
           <About />
         </Route>

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Image from '../../images/500x500.png'
 import cls from './News.module.sass'
 import { AppWrapper } from '../../App.module.sass'
 import { news } from '../../bd.imitation.js'
@@ -16,7 +17,7 @@ function News() {
                 <div className={cls.Desc}>{item.desc}</div>
               </div>
               <div className={cls.NewsItemImage}>
-                <img srcSet={item.image} alt="" />
+                <img srcSet={Image} alt="" />
               </div>
             </div>
           )
