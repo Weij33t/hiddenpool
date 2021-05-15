@@ -4,6 +4,7 @@ const { graphqlHTTP } = require('express-graphql')
 const cors = require('cors')
 const authRouter = require('./Routes/authRouter')
 const likeRouter = require('./Routes/likeRouter')
+const offerRouter = require('./Routes/offerRouter')
 const profileRouter = require('./Routes/profileRouter')
 const PORT = process.env.PORT || 5000
 
@@ -50,6 +51,7 @@ app.use(cors())
 app.use(express.json())
 app.use('/', authRouter)
 app.use('/', likeRouter)
+app.use('/', offerRouter)
 app.use('/profile', profileRouter)
 app.use(
   '/graphql',

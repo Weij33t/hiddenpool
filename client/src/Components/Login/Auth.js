@@ -8,7 +8,9 @@ import Button from '../../UI/Button.js'
 
 import cls from './Auth.module.sass'
 
-function Auth({ setUserData, isLogin }) {
+function Auth({ setUserData, isLogin, location }) {
+  console.log(location)
+  const [phone, setPhone] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
   const [INN, setINN] = useState('')
@@ -17,22 +19,22 @@ function Auth({ setUserData, isLogin }) {
 
   const auth = async (e) => {
     e.preventDefault()
-    if ((role === 'Компания') !== !!INN || !password || !name) {
+    if ((role === 'Компания') !== !!INN || !password || !phone) {
       console.log('Неверно введены данные')
       return
     }
     try {
       const response = await axios.post('http://localhost:5000/login', {
+        phone,
         name,
         password,
         INN: Number(INN) ?? null,
         role,
       })
       const data = response.data
-      setName('')
+      setPhone('')
       setINN('')
       setPassword('')
-      localStorage.setItem('token', data.token)
       setUserData({ ...data }, true, role)
       history.push('/')
     } catch (e) {
@@ -42,12 +44,13 @@ function Auth({ setUserData, isLogin }) {
 
   const signup = async (e) => {
     e.preventDefault()
-    if ((role === 'Компания') !== !!INN || !password || !name) {
+    if ((role === 'Компания') !== !!INN || !password || !phone) {
       console.log('Неверно введены данные')
       return
     }
     try {
       const response = await axios.post('http://localhost:5000/signup', {
+        phone,
         name,
         password,
         INN: Number(INN) ?? 0,
@@ -64,9 +67,8 @@ function Auth({ setUserData, isLogin }) {
       <form>
         <Switch>
           <Route path={`/login`} exact>
-            <NavLink to={'/signup'}>Нет аккаунта? Зарегистрируйтесь.</NavLink>
             <label>
-              Вы компания?
+              Вы компания?{' '}
               <input
                 type="checkbox"
                 onChange={(e) =>
@@ -75,13 +77,27 @@ function Auth({ setUserData, isLogin }) {
               />
             </label>
             <input
+              value={phone}
+              maxLength={11}
+              max={99999999999}
+              onChange={(e) => {
+                if (e.target.value.length <= 11) {
+                  setPhone(
+                    Number(e.target.value) ? Number(e.target.value) : '  '
+                  )
+                }
+              }}
+              type="number"
+              placeholder={`Номер телефона`}
+            />
+            <input
               value={name}
-              minLength={4}
-              onChange={(e) => setName(e.target.value)}
+              maxLength={12}
+              onChange={(e) => {
+                setName(e.target.value)
+              }}
               type="text"
-              placeholder={`${
-                role === 'Компания' ? 'Название компании' : 'Ваше имя'
-              }`}
+              placeholder={`Ваше имя`}
             />
             {role === 'Компания' && (
               <input
@@ -99,11 +115,12 @@ function Auth({ setUserData, isLogin }) {
               minLength={4}
               placeholder="Пароль"
             />
-            <Button click={auth} text="Войти" />
+            <button onClick={auth}>Войти</button>
+            Нет аккаунта? <NavLink to={'/signup'}>Зарегистрируйтесь.</NavLink>
           </Route>
           <Route path={`/signup`} exact>
             <label>
-              Вы компания?
+              Вы компания?{' '}
               <input
                 type="checkbox"
                 onChange={(e) =>
@@ -114,12 +131,24 @@ function Auth({ setUserData, isLogin }) {
             <input
               type="text"
               required
+              value={phone}
+              maxLength={11}
+              max={99999999999}
+              onChange={(e) => {
+                if (e.target.value.length <= 11) {
+                  setPhone(Number(e.target.value) ? Number(e.target.value) : '')
+                }
+              }}
+              placeholder={`Номер телефона`}
+            />
+            <input
               value={name}
-              onChange={(e) => setName(e.target.value)}
-              minLength={4}
-              placeholder={`${
-                role === 'Компания' ? 'Название компании' : 'Ваше имя'
-              }`}
+              maxLength={12}
+              onChange={(e) => {
+                setName(e.target.value)
+              }}
+              type="text"
+              placeholder={`Ваше имя`}
             />
             {role === 'Компания' && (
               <input
@@ -139,7 +168,8 @@ function Auth({ setUserData, isLogin }) {
               minLength={4}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button click={signup} text="Зарегистрироваться" />
+            <button onClick={signup}>Зарегистрироваться</button>
+            Есть аккаунт? <NavLink to={'/login'}>Войдите.</NavLink>
           </Route>
         </Switch>
       </form>

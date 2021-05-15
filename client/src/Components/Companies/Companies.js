@@ -8,14 +8,13 @@ import { GET_ONE_USER } from '../../query/user'
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
 
-import Image from '../../images/Companies/company.png'
-import Like from '../../fonts/like.svg'
 import Feed from '../../fonts/feed.svg'
 
 import cls from './Companies.module.sass'
 import icons from '../../styles/style.module.css'
 import { AppWrapper } from '../../App.module.sass'
 import marked from 'marked'
+import { NavLink, Route } from 'react-router-dom'
 
 function Companies(props) {
   const [companies, setCompanies] = useState([])
@@ -111,7 +110,6 @@ function Companies(props) {
     }
     return words.join(' ')
   }
-
   // console.log(user, companies).
   return (
     <div className={AppWrapper}>
@@ -130,7 +128,7 @@ function Companies(props) {
               return (
                 <div className={cls.Company} key={`${company.name}${index}`}>
                   <div className={cls.CompanyImage}>
-                    <img srcSet={Image} />
+                    <img srcSet={`/companies/${index + 1}.png`} />
                     <div className={cls.CompanyStats}>
                       <div>
                         <span className={cls.CompanyCount}>8</span>{' '}
@@ -183,7 +181,19 @@ function Companies(props) {
                         __html: marked(getDesc(company?.desc)),
                       }}
                     ></div>
-                    <button>Смотреть</button>
+                    <NavLink
+                      to={{
+                        pathname: `/companies/${company.id}`,
+                        state: {
+                          name: company.name,
+                          desc: company.desc,
+                          image: `/companies/${index + 1}.png`,
+                          likes: company.likes,
+                        },
+                      }}
+                    >
+                      Смотреть
+                    </NavLink>
                   </div>
                 </div>
               )
@@ -195,6 +205,7 @@ function Companies(props) {
           <div className={cls.Loader}></div>
         )}
       </div>
+      <Route path={`/companies/:companyId`} />
     </div>
   )
 }

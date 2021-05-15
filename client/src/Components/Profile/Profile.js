@@ -9,7 +9,7 @@ import Image from '../../images/500x500.png'
 import { AppWrapper } from '../../App.module.sass'
 import axios from 'axios'
 
-function Profile({ _id }) {
+function Profile({ _id, likedCompanies }) {
   const { data, loading } = useQuery(GET_ONE_USER, {
     variables: {
       id: _id,
@@ -73,7 +73,7 @@ function Profile({ _id }) {
             <div>
               {user.role === 'Компания'
                 ? `Количество получено: ${user.likes}`
-                : `Поставлено лайков: ${user.likedCompanies?.length ?? 0}`}
+                : `Поставлено лайков: ${likedCompanies?.length ?? 0}`}
             </div>
             <Button text="Сохранить описание" click={saveDesc} />
           </div>

@@ -36,7 +36,6 @@ function App() {
           <Projects />
           <Companies isUser={user.role !== 'Компания'} {...user} />
           <Offer />
-          <About />
         </Route>
         <Route
           path={'/login'}
@@ -59,10 +58,8 @@ function App() {
             component={() => <Redirect from="/profile" to="/" />}
           />
         )}
-
-        <Route path={'/companies/:id'} />
+        <Route path={'/companies/:id'} render={About} />
       </Switch>
-      <Footer />
     </div>
   )
 }

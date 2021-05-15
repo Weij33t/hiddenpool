@@ -6,6 +6,14 @@ import app from '../../App.module.sass'
 import Logo from '../../images/logo.png'
 
 function NavBar({ isLogin, logout }) {
+  const openMenu = (e) => {
+    if (e.target.classList.contains(cls.Opened)) {
+      e.target.classList.remove(cls.Opened)
+      return null
+    }
+    e.target.classList.add(cls.Opened)
+  }
+
   return (
     <div className={cls.NavBar}>
       <div className={app.AppWrapper + ' ' + cls.NavBarWrapper}>
@@ -33,9 +41,34 @@ function NavBar({ isLogin, logout }) {
             </NavLink>
           ) : (
             <NavLink to="/login">
-              <li>Вход/Регистрация</li>
+              <li>Вход</li>
             </NavLink>
           )}
+        </div>
+        <div className={cls.Burger} onClick={openMenu}>
+          <div>
+            <HashLink to="/#news" smooth>
+              <li>Проекты</li>
+            </HashLink>
+            <HashLink to="/#companies" smooth>
+              <li>IT Центры</li>
+            </HashLink>
+            <HashLink to="/#offer" smooth>
+              <li>О нас</li>
+            </HashLink>
+            <HashLink to="/#about" smooth>
+              <li>Заявка</li>
+            </HashLink>
+            {isLogin ? (
+              <NavLink to="/profile">
+                <li>Профиль</li>
+              </NavLink>
+            ) : (
+              <NavLink to="/login">
+                <li>Вход</li>
+              </NavLink>
+            )}
+          </div>
         </div>
       </div>
     </div>

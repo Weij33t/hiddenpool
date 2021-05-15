@@ -20,18 +20,20 @@ class authController {
           .status(400)
           .json({ message: 'Ошибка при регистрации', errors })
       }
-      const { name, password, INN, role } = req.body
-      const candidate = await User.findOne({ name })
+      const { phone, password, INN, role, name } = req.body
+      const candidate = await User.findOne({ phone })
       if (candidate) {
         return res
           .status(400)
           .json({ message: 'Компания с таким названием уже зарегистрирована' })
       }
+
       if (!INN && role === 'Компания') {
         return res.status(400).json({ message: 'Укажите INN' })
       }
       const hashPassword = bcrypt.hashSync(password, 7)
       const user = new User({
+        phone,
         name,
         password: hashPassword,
         desc: '',
@@ -49,8 +51,8 @@ class authController {
 
   async login(req, res) {
     try {
-      const { name, password, INN, role } = req.body
-      const user = await User.findOne({ name })
+      const { name, password, INN, role, phone } = req.body
+      const user = await User.findOne({ phone })
       if (!user) {
         return res.status(400).json({
           message: `${

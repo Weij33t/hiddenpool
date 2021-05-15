@@ -1,0 +1,62 @@
+@import '../../styles/variables.module.sass'
+
+.Login 
+  display: flex
+  align-items: center
+  justify-content: center
+  margin: 0
+  position: absolute
+  top: 50%
+  left: 50%
+  -ms-transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%)
+  a 
+    display: block
+    flex-grow: 2
+  a,
+  a:hover
+    color: $greenLight
+  a:active,
+  a:visited
+    color: $green 
+  form 
+    border: 2px solid $green
+    border-radius: 15px
+    min-height: 310px
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    padding: 30px 30px
+  input 
+    background: $white
+    color: $green
+    font-size: 20px
+    padding: 10px
+    border-radius: 15px
+    border: 2px solid $green 
+    outline: none
+    margin: 7px 0
+  input::placeholder 
+    color: $green
+  input[type="checkbox"]
+    margin-bottom: 20px
+  button 
+    margin: 20px 0
+    background: $green 
+    color: $white 
+    padding: 8px 15px
+    border-radius: 7px
+    font-size: 20px
+    outline: none
+    border: none 
+    cursor: pointer
+    &:hover 
+      background: darken($green, 7)
+
+@media screen and ( max-width: 400px )
+  .Login
+    form 
+      padding: 20px
+
+  

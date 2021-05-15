@@ -34,7 +34,7 @@ function Projects() {
               )
             })}
           </ul>
-          <div className={cls.ProjectImages}>
+          <div className={cls.ProjectsImages}>
             {projectsBd.map((item, index) => {
               return (
                 <div
@@ -42,7 +42,10 @@ function Projects() {
                   key={`${index}${item.name}`}
                   style={{ display: `${projects[index] ? 'block' : 'none'}` }}
                 >
-                  <img srcSet={Project} alt={'Проект, сделанный в IT-центре'} />
+                  <img
+                    srcSet={`/projects/${index + 1}.png`}
+                    alt={'Проект, сделанный в IT-центре'}
+                  />
                 </div>
               )
             })}

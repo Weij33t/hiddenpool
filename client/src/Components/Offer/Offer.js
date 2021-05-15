@@ -5,6 +5,7 @@ import { GET_COMPANIES } from '../../query/company'
 import icons from '../../styles/style.module.css'
 import app from '../../App.module.sass'
 import cls from './Offer.module.sass'
+import axios from 'axios'
 
 function Offer() {
   const [companies, setCompanies] = useState([])
@@ -15,6 +16,8 @@ function Offer() {
   ])
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [companyId, setCompanyId] = useState('')
+  const [offerType, setOfferType] = useState('')
   const { data, loading, refetch } = useQuery(GET_COMPANIES, {
     fetchPolicy: 'cache-first',
     variables: {
@@ -29,6 +32,18 @@ function Offer() {
     }
   }, [data])
 
+  const sendOffer = async () => {
+    if (!phone && !name && !companyId && !offerType) {
+      return
+    }
+
+    const response = await axios.post('http://localhost:5000/offer', {
+      phone,
+      name,
+      companyId,
+      offerType,
+    })
+  }
   return (
     <div className={app.AppWrapper}>
       <div className={cls.Offer} id="offer">
@@ -47,13 +62,18 @@ function Offer() {
               style={{ zIndex: `${isOpen[0] ? '599' : '0'}` }}
             >
               {companies.length > 0 ? (
-                companies.map((company) => {
+                companies.map((company, index) => {
+                  if (company.name === 'Ваш IT Парк') {
+                    return null
+                  }
                   return (
                     <div
+                      key={`${company.name}${index}`}
                       className={cls.OfferSelectBodyItem}
                       onClick={() => {
                         setSelectTitles([company.name, selectTitltes[1]])
                         setIsOpen([0, 0])
+                        setCompanyId(company.id)
                       }}
                     >
                       {company.name}
@@ -86,6 +106,7 @@ function Offer() {
                     e.currentTarget.textContent,
                   ])
                   setIsOpen([0, 0])
+                  setOfferType(e.target.textContent)
                 }}
               >
                 Обучение веб-технологиям
@@ -98,6 +119,7 @@ function Offer() {
                     e.currentTarget.textContent,
                   ])
                   setIsOpen([0, 0])
+                  setOfferType(e.target.textContent)
                 }}
               >
                 Базовый курс по IT
@@ -110,6 +132,7 @@ function Offer() {
                     e.currentTarget.textContent,
                   ])
                   setIsOpen([0, 0])
+                  setOfferType(e.target.textContent)
                 }}
               >
                 Заказ номер три
@@ -122,6 +145,7 @@ function Offer() {
                     e.currentTarget.textContent,
                   ])
                   setIsOpen([0, 0])
+                  setOfferType(e.target.textContent)
                 }}
               >
                 Заказ номер четыре
@@ -137,10 +161,16 @@ function Offer() {
           <input
             value={phone}
             type="number"
-            placeholder={'Ваш Телефон'}
-            onChange={(e) => setPhone(e.target.value)}
+            placeholder={'(+7)-XXX-XX-XX'}
+            maxLength={11}
+            max={99999999999}
+            onChange={(e) => {
+              if (e.target.value.length <= 11) {
+                setPhone(e.target.value)
+              }
+            }}
           />
-          <button>Отправить</button>
+          <button onClick={() => sendOffer()}>Отправить</button>
         </div>
       </div>
     </div>

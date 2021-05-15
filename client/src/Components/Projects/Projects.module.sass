@@ -31,3 +31,41 @@
     background: $greenLight
  
   
+@media screen and ( max-width: 1100px )
+  .Projects 
+    ul 
+      margin: 0 
+      margin-right: 30px
+      li 
+        padding: 10px
+        font-size: 16px
+  .ProjectsContent 
+    justify-content: center
+
+  .ProjectsImages
+    width: 55%
+  
+@media screen and ( max-width: 768px )
+  .Projects 
+    h2 
+      font-size: 38px
+      text-align: center
+    ul 
+      li 
+        padding: 8px
+        font-size: 16px
+    .ProjectsImages
+      width: 50%
+
+@media screen and ( max-width: 600px )
+  .Projects 
+    padding: 0 20px
+    &Content 
+     flex-direction: column
+    ul 
+      margin-bottom: 15px
+    h2 
+      font-size: 35px
+      text-align: center
+    .ProjectsImages 
+      width: 95%
