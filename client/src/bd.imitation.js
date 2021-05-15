@@ -125,25 +125,20 @@ export const companies = [
   },
 ]
 
-export const news = [
+export const projectsBd = [
   {
-    title: 'Somebode once told me',
-    desc: 'Somebode once told meon her forehead parent company is a company that owns enough voting stock in In the shape of an "L" on her foreheadanother firm to control management and operations by influencing or electing its board of directors; the second company being deemed a subsidiary of the parent company. The definition of a parent company',
-    image: 'https://via.placeholder.com/500x500',
+    name: 'Инновационный монитор',
   },
   {
-    title: 'I aint the sharpest tool in the shed',
-    desc: 'I aint the sharpest tool in the shed "L" on her foreheadompany is a company that owns enough voting stock in another firm to control management and operations by influencing or electing its board of directors; the second company being deemed a subsidiary of the parent company. The definition of a parent company',
-    image: 'https://via.placeholder.com/500x500',
+    name: 'Комфортные классы',
   },
   {
-    title: 'She was looking kind of dumb with her finger and her thumb',
-    desc: 'She was looking kind of dumb with her finger and her thumbehead a company that owns enough voting stock in another firm to control managemenIn the shape of an "L" on her foreheadt and operations by influencing or electing its board of directors; the second company being deemed a subsidiary of the parent company. The definition of a parent company',
-    image: 'https://via.placeholder.com/500x500',
+    name: 'Новый дизайн молока',
   },
   {
-    title: 'In the shape of an "L" on her forehead',
-    desc: 'In the shape of an "L" on her foreheadhat owns enough voting stock in another firm to control management aIn the shape of an "L" on her foreheadnd operations by influencing or electing its board of directors; the second company being deemed a subsidiary of the parent company. The definition of a parent company',
-    image: 'https://via.placeholder.com/500x500',
+    name: 'Детская игровая',
+  },
+  {
+    name: 'Сухая вода',
   },
 ]

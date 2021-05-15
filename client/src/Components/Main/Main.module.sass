@@ -1,0 +1,32 @@
+@import '../../styles/variables.module.sass'
+
+.Main
+  &Wrapper 
+    display: flex
+    align-items: center
+    justify-content: space-between
+  &Title
+    position: relative
+    text-align: right
+    color: $green
+    padding: 0 50px
+    z-index: 100
+    &::after 
+      content: ''
+      width: 622px
+      height: 476px
+      z-index: -1
+      position: absolute  
+      top: -90px
+      left: 50px
+      background-image: url('../../images/shapes.png') 
+      background-repeat: no-repeat
+    h1
+      z-index: 10
+      
+      font-size: 72px
+    span 
+      font-size: 20px
+  &Waves 
+    margin: 0 auto
+    width: 100%

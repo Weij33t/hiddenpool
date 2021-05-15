@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import { useQuery } from '@apollo/client'
+import axios from 'axios'
+
+import Button from '../../UI/Button.js'
+import { GET_COMPANIES } from '../../query/company'
+import { GET_ONE_USER } from '../../query/user'
 
 import 'react-responsive-carousel/lib/styles/carousel.min.css' // requires a loader
-import { Carousel } from 'react-responsive-carousel'
-import Image from '../../images/200x250.png'
+
+import Image from '../../images/Companies/company.png'
+import Like from '../../fonts/like.svg'
+import Feed from '../../fonts/feed.svg'
+
 import cls from './Companies.module.sass'
 import icons from '../../styles/style.module.css'
 import { AppWrapper } from '../../App.module.sass'
-import Button from '../../UI/Button.js'
-import { useQuery } from '@apollo/client'
-import { GET_COMPANIES } from '../../query/company'
-import axios from 'axios'
-import { GET_ONE_USER } from '../../query/user'
+import marked from 'marked'
 
 function Companies(props) {
   const [companies, setCompanies] = useState([])
@@ -91,8 +96,23 @@ function Companies(props) {
       ...companies.slice(id + 1),
     ])
   }
+
+  const formatNumber = (number) => {
+    if (number < 1000) {
+      return number
+    }
+    return `${number / 1000}К`
+  }
+
+  const getDesc = (desc) => {
+    const words = desc.split(' ')
+    if (words.length >= 10) {
+      return `${words.slice(0, 10).join(' ')}...`
+    }
+    return words.join(' ')
+  }
+
   // console.log(user, companies).
-  console.log(user, companies)
   return (
     <div className={AppWrapper}>
       <div
@@ -104,49 +124,67 @@ function Companies(props) {
         {!loading || !userLoading || user.likedCompanies ? (
           companies.length > 0 ? (
             companies.map((company, index) => {
+              if (index >= 7) {
+                return null
+              }
               return (
                 <div className={cls.Company} key={`${company.name}${index}`}>
-                  <div className={cls.TextContent}>
-                    <div className={cls.CompanyName}>
-                      {company.name}
-                      {company.likes}
-                      {props.isLogin && props.isUser && (
-                        <span
-                          className={`${
-                            icons[
-                              'icon-heart' +
-                                `${
-                                  user.likedCompanies?.includes(company.id)
-                                    ? ''
-                                    : '-o'
-                                }`
-                            ]
-                          }`}
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => {
-                            if (
-                              !!user &&
-                              user.likedCompanies.includes(company.id)
-                            ) {
-                              dislikeCompany(index)
-                            } else if (
-                              !!user &&
-                              !user.likedCompanies.includes(company.id)
-                            ) {
-                              likeCompany(index)
-                            }
-                          }}
-                        ></span>
-                      )}
-                      {props.isLogin && !props.isUser && (
-                        <span className={icons['icon-heart-o']}></span>
-                      )}
-                    </div>
-                  </div>
                   <div className={cls.CompanyImage}>
                     <img srcSet={Image} />
+                    <div className={cls.CompanyStats}>
+                      <div>
+                        <span className={cls.CompanyCount}>8</span>{' '}
+                        <img srcSet={Feed} alt={'Feed'} />
+                      </div>
+                      <div>
+                        <span className={cls.CompanyCount}>
+                          {formatNumber(company.likes)}
+                        </span>
+                        {props.isLogin && props.isUser && (
+                          <span
+                            className={`${
+                              icons[
+                                'icon-heart' +
+                                  `${
+                                    user.likedCompanies?.includes(company.id)
+                                      ? ''
+                                      : '-o'
+                                  }`
+                              ]
+                            }`}
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {
+                              if (
+                                !!user &&
+                                user.likedCompanies.includes(company.id)
+                              ) {
+                                dislikeCompany(index)
+                              } else if (
+                                !!user &&
+                                !user.likedCompanies.includes(company.id)
+                              ) {
+                                likeCompany(index)
+                              }
+                            }}
+                          ></span>
+                        )}
+                        {(!props.isLogin || !props.isUser) && (
+                          <span className={icons['icon-heart-o']}></span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <button onClick={() => refetch()}>Заказать</button>
+
+                  <div className={cls.CompanyContent}>
+                    <h3 className={cls.CompanyName}>{company.name}</h3>
+                    <div
+                      className={cls.CompanyDesc}
+                      dangerouslySetInnerHTML={{
+                        __html: marked(getDesc(company?.desc)),
+                      }}
+                    ></div>
+                    <button>Смотреть</button>
+                  </div>
                 </div>
               )
             })

@@ -6,7 +6,7 @@ import { GET_ONE_USER } from './query/user.js'
 import About from './Components/About/About.js'
 import Companies from './Components/Companies/Companies.js'
 import NavBar from './Components/NavBar/NavBar.js'
-import News from './Components/News/News.js'
+import Projects from './Components/Projects/Projects.js'
 import Offer from './Components/Offer/Offer.js'
 
 import cls from './App.module.sass'
@@ -14,6 +14,8 @@ import Auth from './Components/Login/Auth.js'
 import { useEffect, useState } from 'react'
 import Profile from './Components/Profile/Profile.js'
 import { GET_COMPANIES } from './query/company.js'
+import Main from './Components/Main/Main.js'
+import Footer from './Components/Footer/Footer.js'
 
 function App() {
   const [user, setUser] = useState({ _id: null, isLogin: false })
@@ -25,13 +27,13 @@ function App() {
   const logout = () => {
     setUser({ _id: null, isLogin: false })
   }
-  console.log(user)
   return (
     <div className={cls.App}>
       <NavBar isLogin={user.isLogin} logout={logout} />
       <Switch>
         <Route path={'/'} exact>
-          <News />
+          <Main />
+          <Projects />
           <Companies isUser={user.role !== 'Компания'} {...user} />
           <Offer />
           <About />
@@ -60,6 +62,7 @@ function App() {
 
         <Route path={'/companies/:id'} />
       </Switch>
+      <Footer />
     </div>
   )
 }

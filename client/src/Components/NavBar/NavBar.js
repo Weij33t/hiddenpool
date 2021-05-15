@@ -2,33 +2,42 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { HashLink } from 'react-router-hash-link'
 import cls from './NavBar.module.sass'
+import app from '../../App.module.sass'
+import Logo from '../../images/logo.png'
 
 function NavBar({ isLogin, logout }) {
   return (
     <div className={cls.NavBar}>
-      <ul>
-        <HashLink to="/#news" smooth>
-          <li>Новости</li>
-        </HashLink>
-        <HashLink to="/#companies" smooth>
-          <li>Компании</li>
-        </HashLink>
-        <HashLink to="/#offer" smooth>
-          <li>Оформить заказ</li>
-        </HashLink>
-        <HashLink to="/#about" smooth>
-          <li>О нас</li>
-        </HashLink>
-        {isLogin ? (
-          <NavLink to="/profile">
-            <li>Профиль</li>
-          </NavLink>
-        ) : (
-          <NavLink to="/login">
-            <li>Войти</li>
-          </NavLink>
-        )}
-      </ul>
+      <div className={app.AppWrapper + ' ' + cls.NavBarWrapper}>
+        <div className={cls.Logo}>
+          <img srcSet={Logo} />
+        </div>
+        <ul>
+          <HashLink to="/#news" smooth>
+            <li>Проекты</li>
+          </HashLink>
+          <HashLink to="/#companies" smooth>
+            <li>IT Центры</li>
+          </HashLink>
+          <HashLink to="/#offer" smooth>
+            <li>О нас</li>
+          </HashLink>
+          <HashLink to="/#about" smooth>
+            <li>Заявка</li>
+          </HashLink>
+        </ul>
+        <div className={cls.Auth}>
+          {isLogin ? (
+            <NavLink to="/profile">
+              <li>Профиль</li>
+            </NavLink>
+          ) : (
+            <NavLink to="/login">
+              <li>Вход/Регистрация</li>
+            </NavLink>
+          )}
+        </div>
+      </div>
     </div>
   )
 }

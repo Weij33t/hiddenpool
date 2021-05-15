@@ -1,17 +1,148 @@
 @import '../../styles/variables.module.sass'
   
 .Offer
-  padding: 50px 0
-  width: 100%
-  background: $orange
+  padding: 150px 0
+  background: url('../../images/Offer/offer.png') no-repeat 60% 50%
   display: flex
   align-items: center 
-  justify-content: center
   color: $white
   span 
     text-decoration: underline
-    color: $dark
+    color: $green
   button 
     margin-left: 75px
     color: $white
     border: 2px solid $white
+  &Window 
+    width: 405px
+    background: linear-gradient(150deg, #3CA0D0 60%, #FAFF0052)
+    border-radius: 15px 
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    padding: 35px 10px
+    h3 
+      font-size: 24px 
+      margin-bottom: 40px
+      // input: margin-top: 20 in component
+    input, button
+      width: 80%
+      background: $salad
+      color: $white
+      font-size: 18px
+      padding: 15px 15px
+      border-radius: 20px
+      border: none
+      outline: none
+      margin: 6px 0
+    input::placeholder 
+      color: $white
+    button 
+      margin-top: 25px
+      font-size: 24px
+      width: 87.5%
+      padding: 11.5px 15px
+      cursor: pointer
+      background: $yellow
+      color: $green
+  &Select 
+    width: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    margin: 6px 0
+    position: relative
+    &Title
+      z-index: 600
+      width: 80%
+      display: flex
+      align-items: center
+      justify-content: space-between
+      font-size: 24px
+      color: $white 
+      background: $salad
+      padding: 12px 15px
+      border-radius: 20px
+      cursor: pointer
+      transition: 0.05s all
+      div:last-child 
+        font-size: 14px
+        font-family: Icomoon !important
+      &:hover 
+        z-index: 600
+        background: darken($salad, 5)
+    &Body 
+      width: calc(80% + 30px)
+      display: none
+      position: absolute
+      padding-top: 28px
+      top: 50%
+      background: $salad
+      color: $white
+      border-radius: 10px
+      &Item 
+        z-index: 300
+        cursor: pointer
+        font-size: 18px
+        padding: 7px 
+        transition: 0.07s all
+        border-radius: 10px
+        &:hover
+          
+          background: darken($salad, 5) 
+    &Body.Open
+      display: block
+      z-index: 599
+
+    
+
+.Loader,
+.Loader:before,
+.Loader:after 
+  border-radius: 50%
+  width: 2.5em
+  height: 2.5em
+  -webkit-animation-fill-mode: both
+  animation-fill-mode: both
+  -webkit-animation: load7 1.8s infinite ease-in-out
+  animation: load7 1.8s infinite ease-in-out
+
+.Loader 
+  color: #ffffff
+  font-size: 10px
+  margin: 80px auto
+  position: relative
+  text-indent: -9999em
+  -webkit-transform: translateZ(0)
+  -ms-transform: translateZ(0)
+  transform: translateZ(0)
+  -webkit-animation-delay: -0.16s
+  animation-delay: -0.16s
+
+.Loader:before,
+.Loader:after 
+  content: ''
+  position: absolute
+  top: 0
+
+.Loader:before 
+  left: -3.5em
+  -webkit-animation-delay: -0.32s
+  animation-delay: -0.32s
+
+.Loader:after 
+  left: 3.5em
+
+@-webkit-keyframes load7 
+  0%,
+  80%,
+  100% 
+    box-shadow: 0 2.5em 0 -1.3em
+  
+  40% 
+    box-shadow: 0 2.5em 0 0
+  
+
+@keyframes lo

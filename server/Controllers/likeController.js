@@ -4,21 +4,12 @@ const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
 const { secret } = require('../config')
 
-const generateAccessToken = (id, roles) => {
-  const payload = {
-    id,
-  }
-  return jwt.sign(payload, secret, { expiresIn: '24h' })
-}
-
 class likeController {
   async increase(req, res) {
     try {
       const errors = validationResult(req)
       if (!errors.isEmpty()) {
-        return res
-          .status(400)
-          .json({ message: 'Ошибка при регистрации', errors })
+        return res.status(400).json({ message: 'Ошибка при лайке', errors })
       }
       const { likes, companyId, userId, likedCompanies } = req.body
       await User.findOne({ _id: userId }).exec(async (err, res) => {

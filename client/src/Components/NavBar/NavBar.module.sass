@@ -1,22 +1,28 @@
 @import '../../styles/variables.module.sass'
   
 .NavBar
-  padding: 1px 0
-  background: $navBarBg
-  display: flex
-  align-items: center
-  flex-direction: column
+  background: $green
+  .NavBarWrapper 
+    padding: 0 -20px
+    display: flex
+    justify-content: center
+    align-items: center
+  .Logo 
+    flex-grow: 3
+  
   ul
-    padding-left: 0
-    list-style: none
+    flex-grow: 10
     display: flex
     align-items: center
-    a
-      text-decoration: none
-      color: $textColorLight
-      margin: 0 30px
     li 
-      font-size: 20px
+      margin: 0 30px
+  li 
+    list-style: none
+    font-size: 18px    
+  a
+    text-decoration: none
+    color: $textColorLight
+  
 
 
 

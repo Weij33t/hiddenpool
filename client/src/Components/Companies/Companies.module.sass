@@ -3,12 +3,16 @@
   
 .Companies 
   display: grid
-  grid-template-columns: repeat(4, 1fr)
+  grid-template-columns: repeat(3, 0.33fr)
   align-items: center
   justify-content: center
   padding: 50px 0
+  padding-bottom: 70px
+  row-gap: 50px
   min-height: 500px
-
+  span
+    font-family: Icomoon 
+    
 .Companies.loading
   height: 540px
   min-height: 540px
@@ -21,33 +25,86 @@
   text-align: center
 
 .Company 
-  width: 75%
-  padding: 15px 0
+  width: 348px
   display: flex
   align-items: center
   flex-direction: column
+  box-shadow: 0px 5px 15px -8px #313131
   margin: 0 auto
-  border: 2px solid $dark 
-  border-radius: 5px
-  span
-    font-family: Icomoon !important
-  &:hover 
-    border-color: $orange
-  .CompanyName
+  border-radius: 15px
+  &Image 
+    position: relative
+  &Stats
+    display: flex
+    align-items: center
+    justify-content: center
+    position: absolute
+    padding: 5px 0
+    bottom: 0
+    background: transparentize(#37B82C, 0.25)
+    width: 100%
+    div 
+      display: flex 
+      align-items: center
+      justify-content: center
+      margin: 0 10px
+    span[class^="style_icon"]
+      font-size: 24px
+      color: $white  
+
+  &Count 
+    margin: 0 3px
+    font-family: $light !important
+    font-size: 24px
+    color: $white 
+  
+  img 
+    height: 100%
+    vertical-align: middle
+    border-top-right-radius: 15px
+    border-top-left-radius: 15px
+  &Content 
+    text-text: left
+    padding: 15px
+    width: calc(100% - 35px)
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+  h3 
+    color: $green
+    font-size: 24px
     font-weight: bold
-    font-size: 14px
+    margin: 5px 0
+  p 
+    margin: 7px 0
+  &Desc 
+    width: 80%
+    margin: 10px 0
+    margin-top: 0px
+    color: #40BD2B
+    font-family: $semi
+    font-size: 18px
+  button
+    margin-top: 5px
+    cursor: pointer
+    font-size: 16px
+    color: $white 
+    background: $darkBlue 
+    border-radius: 7px 
+    border: none
+    padding: 13px 40px
 
 .Loader,
 .Loader:before,
 .Loader:after 
-  background-color: $orange
+  background-color: $green
   -webkit-animation: load1 1s infinite ease-in-out
   animation: load1 1s infinite ease-in-out
   width: 1em
   height: 4em
 
 .Loader 
-  color: $orange
+  color: $green
   text-indent: -9999em
   margin: 88px auto
   position: relative
