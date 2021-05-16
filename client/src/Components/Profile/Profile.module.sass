@@ -2,16 +2,61 @@
   
 .Profile 
   width: 100%
+  overflow: hidden
   .ContentWrapper
     width: 100%
     display: flex
     justify-content: space-between
     align-items: flex-end
+  img 
+    align-self: center
   .TextContent
     height: 100%
     display: flex
     flex-direction: column
     width: 60%
+    button 
+      margin-top: 30px
+  .Stats
+    display: flex
+    align-items: center
+    justify-content: center
+    background: #37B82C
+    width: auto
+    color: $white 
+    border-radius: 10px
+    padding: 10px
+    img
+      margin-bottom: 3px
+    span
+      margin: 0 15px
+      display: flex
+      align-items: center
+      jcc
+      font-size: 30px
+  .Projects 
+    padding: 30px 0
+    padding-bottom: 100px
+    display: grid
+    align-items: center   
+    .Project
+      margin: 0   
+    .ProjectContent 
+      min-height: 240px
+      display: flex
+      justify-content: space-between
+  .TextTitle
+    display: flex
+    align-items: center
+    justify-content: space-between
+  img
+    border-radius: 15px
+  h2 
+    font-size: 40px
+    text-align: center
+    color: $green
+  h3 
+    color: $green ц
   hr
     background: $greenLight
     border-top-color: $green
@@ -34,3 +79,84 @@
     border: 1px solid $orange
   button
     align-self: flex-start
+    text-decoration: none
+    margin-top: 5px
+    cursor: pointer
+    font-size: 18px
+    color: $white 
+    background: $green 
+    border-radius: 25px 
+    border: none
+    padding: 10px 30px
+
+.ProjectModal,
+.Overlay
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  z-index: 100
+  background: rgba(0, 0, 0, .4)
+.ProjectModal
+  position: fixed
+  height: 100vh 
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
+
+.ModalInner
+  z-index: 101
+  padding: 30px
+  width: 30vw 
+  border-radius: 15px
+  background: $white 
+  box-shadow: 0px 0px 10px 1px #313131
+  display: flex
+  align-items: center
+  justify-content: space-around
+  flex-direction: column
+  
+  input, textarea
+    width: 100%
+    border: $green 1px solid
+    border-radius: 10px
+    outline: none
+    font-size: 18px
+    padding: 7px 0
+    margin-top: 30px
+    padding-left: 15px 
+  textarea 
+    height: 40%
+    min-height: 150px
+    margin: 30px 0
+    resize: none 
+    width: 100%
+  button 
+    align-self: center
+
+@media screen and ( max-width: 1000px )
+  .ContentWrapper
+    flex-direction: column
+  .Projects
+    flex-wrap: wrap
+  .Profile 
+    h1 
+      font-size: 30px
+      padding-left: 10px
+    .TextContent
+      width: 90%
+    h2
+      font-size: 35px !important
+    img
+      width: 90%
+    .ProjectImage
+      img 
+        width: 100%
+    h2
+      text-align: center !important
+    .Stats
+      padding: 6px
+      span
+        margin: 0 10px

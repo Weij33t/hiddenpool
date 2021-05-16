@@ -16,6 +16,7 @@ import Profile from './Components/Profile/Profile.js'
 import { GET_COMPANIES } from './query/company.js'
 import Main from './Components/Main/Main.js'
 import Footer from './Components/Footer/Footer.js'
+import Project from './Components/Project/Project.js'
 
 function App() {
   const [user, setUser] = useState({ _id: null, isLogin: false })
@@ -37,6 +38,7 @@ function App() {
           <Companies isUser={user.role !== 'Компания'} {...user} />
           <Offer />
         </Route>
+        <Route path={'/projects/:id'} component={Project} />
         <Route
           path={'/login'}
           render={() => (

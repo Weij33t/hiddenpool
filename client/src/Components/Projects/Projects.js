@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import Project from '../../images/Projects/project.png'
 import cls from './Projects.module.sass'
 import { AppWrapper } from '../../App.module.sass'
 import { projectsBd } from '../../bd.imitation.js'
@@ -16,13 +15,12 @@ function Projects() {
   }
 
   return (
-    <div className={cls.Projects} id="Projects">
+    <div className={cls.Projects} id="projects">
       <div className={AppWrapper}>
         <h2>Топ лучших проектов</h2>
         <div className={cls.ProjectsContent}>
           <ul className={cls.ProjectsList}>
             {projectsBd.map((project, index) => {
-              console.log(projects)
               return (
                 <li
                   className={`${projects[index] ? cls.ProjectsActive : ''}`}

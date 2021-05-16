@@ -1,4 +1,4 @@
-const User = require('../models/User')
+const User = require('../Models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { validationResult } = require('express-validator')
@@ -25,7 +25,9 @@ class authController {
       if (candidate) {
         return res
           .status(400)
-          .json({ message: 'Компания с таким названием уже зарегистрирована' })
+          .json({
+            message: 'Компания с таким номером телефона уже зарегистрирована',
+          })
       }
 
       if (!INN && role === 'Компания') {
@@ -52,7 +54,7 @@ class authController {
   async login(req, res) {
     try {
       const { name, password, INN, role, phone } = req.body
-      const user = await User.findOne({ phone })
+      const user = await User.findOne({ phone, name })
       if (!user) {
         return res.status(400).json({
           message: `${

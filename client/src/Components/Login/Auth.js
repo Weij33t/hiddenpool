@@ -9,7 +9,6 @@ import Button from '../../UI/Button.js'
 import cls from './Auth.module.sass'
 
 function Auth({ setUserData, isLogin, location }) {
-  console.log(location)
   const [phone, setPhone] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')

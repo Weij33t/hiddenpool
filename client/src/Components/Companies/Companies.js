@@ -34,11 +34,9 @@ function Companies(props) {
   })
   useEffect(() => {
     if (!loading) {
-      console.log('newComp')
       setCompanies(data.getAllCompanies)
     }
     if (!userLoading) {
-      console.log('newData')
       setUser(userData.getUser)
     }
   }, [data, userData])
@@ -67,7 +65,6 @@ function Companies(props) {
 
   const dislikeCompany = async (id) => {
     const company = { ...companies[id] }
-    console.log('dis')
     company.likes = company.likes - 1
 
     const companyIndex = user.likedCompanies.indexOf(company.id)
@@ -110,7 +107,6 @@ function Companies(props) {
     }
     return words.join(' ')
   }
-  // console.log(user, companies).
   return (
     <div className={AppWrapper}>
       <div
@@ -189,6 +185,9 @@ function Companies(props) {
                           desc: company.desc,
                           image: `/companies/${index + 1}.png`,
                           likes: company.likes,
+                          posts: 8,
+                          id: company.id,
+                          projects: company.projects,
                         },
                       }}
                     >

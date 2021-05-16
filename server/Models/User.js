@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose')
+const Project = require('./Project')
 
 const User = new Schema({
   password: String,
@@ -8,6 +9,14 @@ const User = new Schema({
   desc: String,
   INN: Number,
   likes: Number,
+  projects: [
+    {
+      companyId: String,
+      name: String,
+      desc: String,
+      likes: Number,
+    },
+  ],
   likedCompanies: [],
 })
 

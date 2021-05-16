@@ -29,7 +29,7 @@ input[type='number'] {
 
 h1,
 h2 {
-  background: linear-gradient(90deg, #a4e221 5%, #257930);
+  background: linear-gradient(90deg, #a4e221 0%, #257930);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

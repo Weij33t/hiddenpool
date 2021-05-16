@@ -21,6 +21,11 @@ export const GET_COMPANIES = gql`
       INN
       likes
       role
+      projects {
+        name
+        desc
+        likes
+      }
     }
   }
 `

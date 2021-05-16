@@ -21,16 +21,13 @@ function NavBar({ isLogin, logout }) {
           <img srcSet={Logo} />
         </div>
         <ul>
-          <HashLink to="/#news" smooth>
+          <HashLink to="/#projects">
             <li>Проекты</li>
           </HashLink>
           <HashLink to="/#companies" smooth>
             <li>IT Центры</li>
           </HashLink>
           <HashLink to="/#offer" smooth>
-            <li>О нас</li>
-          </HashLink>
-          <HashLink to="/#about" smooth>
             <li>Заявка</li>
           </HashLink>
         </ul>
@@ -47,14 +44,11 @@ function NavBar({ isLogin, logout }) {
         </div>
         <div className={cls.Burger} onClick={openMenu}>
           <div>
-            <HashLink to="/#news" smooth>
+            <HashLink to="/#projects" smooth>
               <li>Проекты</li>
             </HashLink>
             <HashLink to="/#companies" smooth>
               <li>IT Центры</li>
-            </HashLink>
-            <HashLink to="/#offer" smooth>
-              <li>О нас</li>
             </HashLink>
             <HashLink to="/#about" smooth>
               <li>Заявка</li>

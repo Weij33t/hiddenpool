@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import cls from '../Profile/Profile.module.sass'
 import comp from '../Companies/Companies.module.sass'
@@ -7,17 +7,30 @@ import Feed from '../../fonts/feed.svg'
 import Like from '../../fonts/like.svg'
 import { AppWrapper } from '../../App.module.sass'
 import marked from 'marked'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { GET_ALL_PROJECTS } from '../../query/project'
+import { useQuery } from '@apollo/client'
 
-function About({ location }) {
+function Project({ location }) {
   const { state } = location
+  const { data, loading } = useQuery(GET_ALL_PROJECTS)
+  const [projects, setProjects] = useState([])
+  const [project, setProject] = useState({})
+
+  useEffect(() => {
+    if (!loading) {
+      setProjects(data.getAllProjects)
+    }
+  }, [data])
+
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max)
+  }
+
   return (
     <div className={AppWrapper}>
       <div className={cls.Profile}>
-        <h1>
-          Профиль компании
-          {state.name}
-        </h1>
+        <h1>Проект {state.name}</h1>
 
         <hr />
         <div
@@ -27,7 +40,7 @@ function About({ location }) {
           <img src={state.image} width={550} />
           <div className={cls.TextContent}>
             <div className={cls.TextTitle}>
-              <h2 style={{ fontSize: '45px' }}>О нас</h2>
+              <h2 style={{ fontSize: '45px' }}>О Проекте</h2>
               <div className={cls.Stats}>
                 <span>
                   {state.posts}&nbsp; <img srcSet={Feed} />{' '}
@@ -47,11 +60,14 @@ function About({ location }) {
             ></div>
           </div>
         </div>
-        <h2 style={{ textAlign: 'left' }}>Наши проекты</h2>
+        <h2 style={{ textAlign: 'left' }}>Другие проекты</h2>
         <div className={cls.Projects + ' ' + comp.Companies}>
-          {state.projects.map((project, index) => {
+          {projects.map((project, index) => {
             return (
-              <div className={comp.Company + ' ' + cls.Project}>
+              <div
+                className={comp.Company + ' ' + cls.Project}
+                key={project.id}
+              >
                 <div className={comp.CompanyImage + ' ' + cls.ProjectImage}>
                   <img srcSet={`/companies/${index + 1}.png`} />
                   <div className={comp.CompanyStats}>
@@ -67,22 +83,22 @@ function About({ location }) {
                   <div
                     className={comp.CompanyDesc}
                     dangerouslySetInnerHTML={{
-                      __html: marked(project.desc),
+                      __html: marked(project?.desc ?? ''),
                     }}
                   ></div>
-                  <NavLink
+                  <Link
                     to={{
                       pathname: `/projects/${project.id}`,
                       state: {
                         name: project.name,
                         desc: project.desc,
-                        image: `/companies/${index + 1}.png`,
+                        image: `/companies/${getRandomInt(6)}.png`,
                         likes: project.likes,
                       },
                     }}
                   >
                     Смотреть
-                  </NavLink>
+                  </Link>
                 </div>
               </div>
             )
@@ -93,4 +109,4 @@ function About({ location }) {
   )
 }
 
-export default About
+export default Project
