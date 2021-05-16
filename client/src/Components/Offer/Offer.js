@@ -37,12 +37,15 @@ function Offer() {
       return
     }
 
-    const response = await axios.post('http://localhost:5000/offer', {
-      phone,
-      name,
-      companyId,
-      offerType,
-    })
+    const response = await axios.post(
+      'https://guarded-atoll-11219.herokuapp.com/offer',
+      {
+        phone,
+        name,
+        companyId,
+        offerType,
+      }
+    )
   }
   return (
     <div className={app.AppWrapper}>

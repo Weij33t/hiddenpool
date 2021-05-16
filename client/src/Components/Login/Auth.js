@@ -23,13 +23,16 @@ function Auth({ setUserData, isLogin, location }) {
       return
     }
     try {
-      const response = await axios.post('http://localhost:5000/login', {
-        phone,
-        name,
-        password,
-        INN: Number(INN) ?? null,
-        role,
-      })
+      const response = await axios.post(
+        'https://guarded-atoll-11219.herokuapp.com/login',
+        {
+          phone,
+          name,
+          password,
+          INN: Number(INN) ?? null,
+          role,
+        }
+      )
       const data = response.data
       setPhone('')
       setINN('')
@@ -48,13 +51,16 @@ function Auth({ setUserData, isLogin, location }) {
       return
     }
     try {
-      const response = await axios.post('http://localhost:5000/signup', {
-        phone,
-        name,
-        password,
-        INN: Number(INN) ?? 0,
-        role,
-      })
+      const response = await axios.post(
+        'https://guarded-atoll-11219.herokuapp.com/signup',
+        {
+          phone,
+          name,
+          password,
+          INN: Number(INN) ?? 0,
+          role,
+        }
+      )
       auth(e)
     } catch (e) {
       console.log({ ...e })

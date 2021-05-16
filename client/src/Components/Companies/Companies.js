@@ -48,12 +48,15 @@ function Companies(props) {
     if (user.likedCompanies.includes(company.id)) {
       return false
     }
-    const response = await axios.post('http://localhost:5000/like', {
-      likes: company.likes,
-      companyId: company.id,
-      userId: user.id,
-      likedCompanies: [...user.likedCompanies, company.id],
-    })
+    const response = await axios.post(
+      'https://guarded-atoll-11219.herokuapp.com/like',
+      {
+        likes: company.likes,
+        companyId: company.id,
+        userId: user.id,
+        likedCompanies: [...user.likedCompanies, company.id],
+      }
+    )
     setCompanies([
       ...companies.slice(0, id),
       company,
@@ -69,15 +72,18 @@ function Companies(props) {
 
     const companyIndex = user.likedCompanies.indexOf(company.id)
 
-    const response = await axios.post('http://localhost:5000/like', {
-      likes: company.likes,
-      companyId: company.id,
-      userId: user.id,
-      likedCompanies: [
-        ...user.likedCompanies.slice(0, companyIndex),
-        ...user.likedCompanies.slice(companyIndex + 1),
-      ],
-    })
+    const response = await axios.post(
+      'https://guarded-atoll-11219.herokuapp.com/like',
+      {
+        likes: company.likes,
+        companyId: company.id,
+        userId: user.id,
+        likedCompanies: [
+          ...user.likedCompanies.slice(0, companyIndex),
+          ...user.likedCompanies.slice(companyIndex + 1),
+        ],
+      }
+    )
     setUser({
       ...user,
       likedCompanies: [

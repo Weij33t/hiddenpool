@@ -56,7 +56,7 @@ function Profile({ _id, likedCompanies }) {
   }
 
   const saveDesc = async () => {
-    await axios.post('http://localhost:5000/desc', {
+    await axios.post('https://guarded-atoll-11219.herokuapp.com/desc', {
       id: _id,
       desc: user.desc,
     })
